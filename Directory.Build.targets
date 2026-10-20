@@ -1,0 +1,17 @@
+<Project>
+
+  <!--
+    本 fork 的构建覆盖：关闭 Minecraft 下载 / 安装 / 修复 / 整合包安装的地区限制。
+
+    做法：把上游 Modules\Minecraft\RestrictedFeaturePolicy.cs 从编译项里移除，
+    改编译 local-override 下的覆盖实现（恒判定为“不受限”）。
+
+    这两个文件都是上游没有的新文件，也不修改任何上游已有文件，
+    因此上游更新 dev 时不会与本次改动产生文本冲突。
+  -->
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'Plain Craft Launcher 2'">
+    <Compile Remove="Modules\Minecraft\RestrictedFeaturePolicy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)local-override\RestrictedFeaturePolicy.cs" />
+  </ItemGroup>
+
+</Project>
